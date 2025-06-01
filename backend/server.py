@@ -285,9 +285,28 @@ async def make_choice(session_id: str, choice: StoryChoice):
         user_message = UserMessage(text=choice_prompt)
         response = await chat.send_message(user_message)
         
-        # Parse the JSON response
+        # Parse the JSON response (handle markdown wrapped JSON)
         import json
-        story_data = json.loads(response)
+        import re
+        
+        # Try parsing directly first
+        try:
+            story_data = json.loads(response)
+        except json.JSONDecodeError:
+            # Look for JSON wrapped in markdown code blocks
+            json_match = re.search(r'```json\s*(.*?)\s*```', response, re.DOTALL)
+            if json_match:
+                json_str = json_match.group(1)
+                story_data = json.loads(json_str)
+            else:
+                # Look for JSON anywhere in the response
+                start = response.find('{')
+                end = response.rfind('}') + 1
+                if start != -1 and end != 0:
+                    json_str = response[start:end]
+                    story_data = json.loads(json_str)
+                else:
+                    raise HTTPException(status_code=500, detail="Could not parse JSON from AI response")
         
         # Update game state
         game_state.current_story = story_data["story_text"]
