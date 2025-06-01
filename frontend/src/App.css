@@ -1,38 +1,142 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #111827;
+  color: #f9fafb;
+}
+
 .App {
-    text-align: center;
+  min-height: 100vh;
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+::-webkit-scrollbar-track {
+  background: #374151;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+::-webkit-scrollbar-thumb {
+  background: #6b7280;
+  border-radius: 4px;
 }
 
-.App-link {
-    color: #61dafb;
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+/* Animation for loading spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Custom button hover effects */
+.btn-primary {
+  @apply bg-gradient-to-r from-purple-600 to-red-600 text-white font-semibold py-3 px-6 rounded-lg;
+  @apply hover:from-purple-700 hover:to-red-700 transform hover:scale-105 transition-all duration-200;
+  @apply shadow-lg hover:shadow-xl;
+}
+
+/* Story text styling */
+.story-text {
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+/* Choice buttons */
+.choice-button {
+  @apply w-full text-left p-4 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors;
+  @apply border border-gray-600 hover:border-purple-500;
+}
+
+.choice-button:hover {
+  transform: translateX(4px);
+}
+
+/* Character stat cards */
+.stat-card {
+  @apply bg-gray-700 p-3 rounded text-center;
+  transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+  @apply bg-gray-600;
+  transform: translateY(-2px);
+}
+
+/* Dark fantasy gradient backgrounds */
+.bg-dark-fantasy {
+  background: linear-gradient(135deg, #1f2937 0%, #6366f1 50%, #dc2626 100%);
+}
+
+.bg-dark-gradient {
+  background: linear-gradient(to bottom, #111827, #581c87, #111827);
+}
+
+/* Text glow effect for titles */
+.text-glow {
+  text-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
+}
+
+/* Card shadow effects */
+.card-shadow {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Input field focus effects */
+.input-focus:focus {
+  box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.1);
+}
+
+/* Responsive text sizing */
+@media (max-width: 768px) {
+  .story-text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
+/* Custom selection colors */
+::selection {
+  background-color: rgba(147, 51, 234, 0.3);
+  color: #f9fafb;
+}
+
+/* Smooth transitions for all interactive elements */
+button, select, input {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Loading animation */
+.loading-dots::after {
+  content: '';
+  animation: dots 2s infinite;
+}
+
+@keyframes dots {
+  0%, 20% { content: ''; }
+  40% { content: '.'; }
+  60% { content: '..'; }
+  80%, 100% { content: '...'; }
 }
